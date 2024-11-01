@@ -7,11 +7,15 @@ from Block import Block
 class Wallet():
 
   def __init__(self):
-
     self.keyPair = RSA.generate(2048)
 
-  def sign(self, data):
+  def fromKey(self, file):
+    key = ''
+    with open(file, 'r') as keyfile:
+      key = RSA.importKey(keyfile.read())
+    self.keyPair = key
 
+  def sign(self, data):
     dataHash = BlockchainUtils.hash(data)
     signatureSchemeObject = PKCS1_v1_5.new(self.keyPair)
     signature = signatureSchemeObject.sign(dataHash)
@@ -19,7 +23,6 @@ class Wallet():
 
   @staticmethod
   def signatureValid(data, signature, publicKeyString):
-
     signature = bytes.fromhex(signature)
     dataHash = BlockchainUtils.hash(data)
     publicKey = RSA.importKey(publicKeyString)
@@ -32,7 +35,6 @@ class Wallet():
     return publicKeyString
 
   def createTransaction(self, receiver, amount, type):
-
     transaction = Transaction(self.publicKeyString(), receiver, amount, type)
     signature = self.sign(transaction.payload())
     transaction.sign(signature)
