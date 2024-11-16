@@ -15,3 +15,19 @@ P2P Peer Discovery
 Socket Communication
 REST Endpoints
 Threading & Parallelization
+
+## Test commands
+
+### cmd:
+
+python main.py localhost 10001 5000 keys/genesisPrivateKey.pem
+python main.py localhost 10002 5001 
+python main.py localhost 10003 5003 keys/stakerPrivateKey.pem
+python Interaction.py
+
+### browser:
+
+localhost:5000/blockchain
+localhost:5001/blockchain
+localhost:5003/blockchain
+
